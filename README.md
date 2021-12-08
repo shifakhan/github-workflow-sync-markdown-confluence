@@ -1,3 +1,6 @@
+<!-- Space: GITHUBMARK -->
+<!-- Title: Github workflow for syncing repository markdown files to confluence cloud -->
+
 # Github workflow for syncing repository markdown files to confluence cloud
 
 ### To use this workflow in your project
@@ -9,6 +12,8 @@
   - `MARKDOWN_SYNC_CONFLUENCE_USERNAME` - Email address used to log in to confluence
   - `MARKDOWN_SYNC_CONFLUENCE_BASE_URL` - Confluence home URL Eg: `https://xyz.atlassian.net/wiki`
 
+![Repository secrets](repository_secrets.png)
+
 ### Note
 
 - This workflow uses https://github.com/kovetskiy/mark to convert markdown files to confluence content. As described in the readme of this tool, your markdown files will need extra markup to define where to copy the file in confluence. Files without the minimum markup (Space, Title) will be ignored. Example - 
@@ -19,4 +24,5 @@
 ## Markdown content
 ```
 - This workflow only runs when code is pushed to `master` or `main` branch and a markdown file was modified in the code changes.  
-- This workflow only syncs the  markdown files `docs` folder and subfolders. To sync all `.md` files change the value of `FILES_CHANGED_IN_COMMIT` to `$(git log -m -1 --name-only --pretty="format:" ${{ github.sha }} | grep '.*\.md$')`
+- This workflow only syncs the  markdown files `docs` folder and subfolders iin addition to `README.md`. To sync all `.md` files change the value of `FILES_CHANGED_IN_COMMIT` to `$(git log -m -1 --name-only --pretty="format:" ${{ github.sha }} | grep '.*\.md$')`
+- Image attachments work correctly if they are in the same directory as the markdown file. 

@@ -39,3 +39,5 @@ jobs:
               mark -u ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_USERNAME }} -p ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_API_TOKEN }} -b ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_BASE_URL }} -f $file;
               echo;
             done
+
+            mark -u ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_USERNAME }} -p ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_API_TOKEN }} -b ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_BASE_URL }} -f README.md;
