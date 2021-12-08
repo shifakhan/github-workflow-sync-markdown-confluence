@@ -1,0 +1,41 @@
+name: Sync markdown files to confluence
+
+on:
+  # Triggers the workflow on push events but only for the master branch
+  push:
+    branches: [ master, main ]
+  
+  # Allows running workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  # This workflow contains a single job called "sync"
+  sync:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so the job can access it
+      - uses: actions/checkout@v2
+        with:
+          # This fetches all git commit history to run git log correctly
+          fetch-depth: 0
+      
+      - name: Docker Run kovetskiy/mark to copy markdown files to confluence.
+        uses: addnab/docker-run-action@v3  
+        with:
+          image: kovetskiy/mark:latest
+          options: -v ${{ github.workspace }}:/work
+          run: |
+            cd /work
+            echo ${{ github.sha }}
+            FILES_CHANGED_IN_COMMIT=$(git log -m -1 --name-only --pretty="format:" ${{ github.sha }} | grep '^docs.*\.md$')
+            echo $FILES_CHANGED_IN_COMMIT
+
+            [[ -z "$FILES_CHANGED_IN_COMMIT" ]] && { echo "No markdown files were modified in this commit" ; exit 0; }
+            
+            for file in $FILES_CHANGED_IN_COMMIT; do
+              echo "> Sync $file";
+              mark -u ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_USERNAME }} -p ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_API_TOKEN }} -b ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_BASE_URL }} -f $file;
+              echo;
+            done
