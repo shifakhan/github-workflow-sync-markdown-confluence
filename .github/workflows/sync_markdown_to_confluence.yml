@@ -29,7 +29,7 @@ jobs:
           run: |
             cd /work
             echo ${{ github.sha }}
-            FILES_CHANGED_IN_COMMIT=$(git log -m -1 --name-only --pretty="format:" ${{ github.sha }} | grep '^docs.*\.md$')
+            FILES_CHANGED_IN_COMMIT=$(git log -m -1 --name-only --pretty="format:" ${{ github.sha }} | grep '^docs.*\.md$\|README.md')
             echo $FILES_CHANGED_IN_COMMIT
 
             [[ -z "$FILES_CHANGED_IN_COMMIT" ]] && { echo "No markdown files were modified in this commit" ; exit 0; }
@@ -39,5 +39,3 @@ jobs:
               mark -u ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_USERNAME }} -p ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_API_TOKEN }} -b ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_BASE_URL }} -f $file;
               echo;
             done
-
-            mark -u ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_USERNAME }} -p ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_API_TOKEN }} -b ${{ secrets.MARKDOWN_SYNC_CONFLUENCE_BASE_URL }} -f README.md;
