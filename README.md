@@ -1,5 +1,5 @@
 <!-- Space: GITHUBMARK -->
-<!-- Title: Github workflow for syncing repository markdown files to confluence cloud -->
+<!-- Title: Sync markdown files to confluence -->
 <!-- Attachment: repository_secrets.png -->
 
 # Github workflow for syncing repository markdown files to confluence cloud
