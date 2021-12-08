@@ -1,6 +1,7 @@
 <!-- Space: GITHUBMARK -->
 <!-- Title: Sync markdown files to confluence -->
 <!-- Attachment: repository_secrets.png -->
+<!-- Attachment: confluence_page_readme.png -->
 
 # Github workflow for syncing repository markdown files to confluence cloud
 
@@ -27,3 +28,6 @@
 - This workflow only runs when code is pushed to `master` or `main` branch and a markdown file was modified in the code changes.  
 - This workflow only syncs the  markdown files `docs` folder and subfolders iin addition to `README.md`. To sync all `.md` files change the value of `FILES_CHANGED_IN_COMMIT` to `$(git log -m -1 --name-only --pretty="format:" ${{ github.sha }} | grep '.*\.md$')`
 - Image attachments work correctly if they are in the same directory as the markdown file. 
+
+#### Sample of this README.md doc synced to confluence
+![Confluence Screenshot](confluence_page_readme.png)
